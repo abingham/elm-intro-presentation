@@ -61,7 +61,7 @@ distinctColors =
 
 * The Elm Architecture
 
-[[file:tea-main-flow.png]]
+[[file:images/tea-main-flow.png]]
 
 * The Elm Architecture
 
@@ -87,11 +87,11 @@ view =
 
 * Effects: The HTML cycle
 
-[[file:update-cycle-html.png]]
+[[file:images/update-cycle-html.png]]
 
 * Effects: More generally
 
-[[file:update-cycle-general.png]]
+[[file:images/update-cycle-general.png]]
 
 * Subscriptions
 
