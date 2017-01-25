@@ -1,0 +1,176 @@
+#+Title: A Brief Intro to Elm
+
+#+Author: Austin Bingham
+
+* What is Elm?
+
+*Haskell for web pages*
+
+ Characteristics:
+
+- Statically/structurally typed
+- Compiled (to JavaScript)
+- Functional (reactive)
+- Immutable data structures
+- Good interop/embedding
+- Virtual DOM - diff-based DOM updating
+
+* No nulls!
+
+With ADTs you eliminate nulls.
+
+The compiler forces you to handle all cases.
+
+* Where does it fit in the world?
+
+Where Angular /et al./ sit, except without runtime
+exceptions.
+
+Like Haskell, the compiler helps you make a lot of
+guarantees.
+
+* What does it look like?
+
+#+begin_src elm
+distinctColors : List (Float -> Color)
+distinctColors =
+  let
+    colorBases =
+      [ 154, 77, 34, 111, 56, 28,
+        192, 96, 48, 255, 128, 64 ]
+
+    colorSet base =
+      [ (rgba 0 0 base),
+        (rgba 0 base 0),
+        (rgba base 0 0),
+        (rgba 0 base base),
+        (rgba base 0 base),
+        (rgba base base 0) ]
+  in
+    List.map colorSet colorBases
+        |> List.concat
+#+end_src
+
+* A complete example
+
+=hello_world.elm=
+
+* A better example
+
+=reverse.elm=
+
+* The Elm Architecture
+
+[[file:tea-main-flow.png]]
+
+* The Elm Architecture
+
+#+begin_src elm
+-- MODEL
+type alias Model = { id: Int, ... }
+
+-- MSG VOCABULARY
+type Msg = Reset | ...
+
+-- UPDATE
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    Reset -> ...
+    ...
+
+-- VIEW
+view : Model -> Html Msg
+view =
+  ...
+#+end_src
+
+* Effects: The HTML cycle
+
+[[file:update-cycle-html.png]]
+
+* Effects: More generally
+
+[[file:update-cycle-general.png]]
+
+* Subscriptions
+
+*Messages from the impure javascript world*
+
+Represent all sort of things:
+
+- User input
+- Websocket data
+- Time
+- ...anything from outside Elm...
+
+#+begin_src elm
+every : Time -> (Time -> msg) -> Sub msg
+moves : (Position -> msg) -> Sub msg
+#+end_src
+
+* Ports: Javascript interop
+
+*Message pipes between Javascript and Elm*
+
+** Incoming
+#+begin_src elm
+-- port for listening for suggestions from JavaScript
+port suggestions : (List String -> msg) -> Sub msg
+#+end_src
+
+You provide a function from `List String` to your
+`msg`, and it gets routed to your `update.
+
+
+** Outgoing
+#+begin_src elm
+-- port for sending strings out to JavaScript
+port check : String -> Cmd msg
+#+end_src
+
+In JavaScript, Elm creates `check` to which you
+can subscribe functions that take a string.
+
+* JavaScript embedding
+
+#+begin_src javascript
+  <script src="project_name.js"></script>
+
+  <script>
+  var mountNode = document.getElementById('mount-element');
+
+  // .embed() can take an optional second argument.
+  // This would be an object describing the data we
+  // need to start a program, i.e. a userID or some
+  // token
+  var app = Elm.ProjectName.embed(mountNode);
+  </script>
+#+end_src
+
+
+* Tool support
+
+A good and improving set of tools:
+
+- elm-make
+- elm-package
+- elm-reactor
+- elm-oracle
+- elm-repl
+- elm-format
+
+Good editor support as well.
+
+* Resources
+
+- [[http://elm-lang.org/][Elm homepage: elm-lang.org]]
+- [[http://www.elm-tutorial.org/][elm-tutorial.org]]
+- [[https://github.com/evancz/elm-todomvc][Todo MVC: github.com/evancz/elm-todomvc]]
+
+* Real example: Decktape.io
+
+A tool for performing HTLM-presentation conversion
+to PDF.
+
+github.com/abingham/decktape.io
