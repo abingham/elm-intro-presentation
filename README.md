@@ -9,4 +9,8 @@ The presentation itself is in `elm-intro.org` and is designed to be delivered
 using [the Emacs `org-present` package](https://github.com/rlister/org-present).
 
 This works with Elm 0.18. To run the examples, it's probably simplest to just
-use elm-reactor.
+use elm-reactor:
+
+```
+$ elm-reactor
+```
