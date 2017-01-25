@@ -53,11 +53,11 @@ distinctColors =
 
 * A complete example
 
-=hello_world.elm=
+[[file:examples/hello_world.elm][hello_world.elm]]
 
 * A better example
 
-=reverse.elm=
+[[file:examples/reverse.elm][reverse.elm]]
 
 * The Elm Architecture
 

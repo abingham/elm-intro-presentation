@@ -12,5 +12,6 @@ This works with Elm 0.18. To run the examples, it's probably simplest to just
 use elm-reactor:
 
 ```
-$ elm-reactor
+cd examples
+elm-reactor
 ```
